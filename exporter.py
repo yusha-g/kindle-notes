@@ -4,7 +4,7 @@ def extract_unique_titles():
     ...
 
 def clean_titles(book, author):
-    separators = ['-', '_', '[', '(']
+    separators = ['-', '_', '[', '(',]
 
     book=book.replace("\ufeff","")
     author = author[:-2]
@@ -15,17 +15,11 @@ def clean_titles(book, author):
                 book = book.split(char)[0]
             book = book.replace(char, " ")
 
-    if author in book:
-        book=book.replace(author,"")
+    
+    book=book.replace(author,"")
     if "," in author:
         author = author.split(",")
         author = " ".join(author[::-1])
-
-    for char in separators:
-        if char in book:
-            if char == '[' or char == '(':
-                book = book.split(char)[0]
-            book =book.replace(char, " ")
     
     return book.title().strip(), author.title().strip()
 
