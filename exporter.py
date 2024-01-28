@@ -4,10 +4,10 @@ def extract_unique_titles():
     ...
 
 def clean_titles(book, author):
-    separators = ['-', '_', '[', '(',]
+    separators = ['-', '_', '[', '(']
 
-    book=book.replace("\ufeff","")
-    author = author[:-2]
+    book=book.replace("\ufeff","").title()
+    author = author[:-2].title()
 
     for char in separators:
         if char in book:
@@ -15,13 +15,13 @@ def clean_titles(book, author):
                 book = book.split(char)[0]
             book = book.replace(char, " ")
 
-    
+    book=book.replace("By "+author,"")
     book=book.replace(author,"")
     if "," in author:
         author = author.split(",")
         author = " ".join(author[::-1])
     
-    return book.title().strip(), author.title().strip()
+    return book.strip(), author.strip()
 
 if __name__ == "__main__":
     my_clippings = open("resources/My Clippings.txt", "r")
@@ -39,5 +39,4 @@ if __name__ == "__main__":
             book_dictionary[book]={
                 "Author": author
             }
-        # breakpoint()
     print(book_dictionary)
